@@ -15,7 +15,7 @@ async def ws_search(ws):
     while True:
         search_string = await ws.receive_text()
         # TODO: do the search
-        await ws.send_json()
+        await ws.send_json({})
 
     await ws.close()
 

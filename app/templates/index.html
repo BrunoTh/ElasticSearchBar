@@ -8,10 +8,12 @@
 
 {% block content %}
     <div class="row">
-        <input id="search" type="text" placeholder="Search" />
+        <input id="search" type="text" placeholder="Search" onchange="search_suggestion(this.value);" />
     </div>
 
-    <div class="row">
-
+    <div class="row" id="search_results">
+        {% for result in result_list %}
+            {% include "search_result.html" %}
+        {% endfor %}
     </div>
 {% endblock content %}
