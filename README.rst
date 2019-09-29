@@ -1,5 +1,7 @@
 ElasticSearchBar
 ================
+**Currently under development**
+
 Use the raw power of Elasticsearch and Lucene through a simple input field.
 
 
