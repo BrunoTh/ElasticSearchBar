@@ -1,6 +1,9 @@
 import responder
+from elasticsearch import Elasticsearch
+import settings
 
 api = responder.API()
+es = Elasticsearch(settings.ELASTICSEARCH_SERVER)
 
 
 @api.route("/")
@@ -14,7 +17,11 @@ async def ws_search(ws):
 
     while True:
         search_string = await ws.receive_text()
-        # TODO: do the search
+
+        search_result = es.search(index=settings.ELASTICSEARCH_INDEX, q=search_string)
+
+        # TODO: exclude unwanted fields
+
         await ws.send_json({})
 
     await ws.close()
