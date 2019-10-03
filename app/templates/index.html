@@ -8,7 +8,12 @@
 
 {% block content %}
     <div class="row">
-        <input id="search" type="text" placeholder="Search" onchange="search_suggestion(this.value);" />
+        <form method="get">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">search</i>
+                <input id="search" type="text" placeholder="Search" class="autocomplete" oninput="search_suggestion(this.value);" />
+            </div>
+        </form>
     </div>
 
     <div class="row" id="search_results">
