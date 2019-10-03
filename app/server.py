@@ -8,7 +8,18 @@ es = Elasticsearch(settings.ELASTICSEARCH_SERVER)
 
 @api.route("/")
 async def index(req, resp):
-    resp.html = api.template('index.html')
+    result_list = []
+
+    search_string = req.params.get('search')
+
+    if search_string:
+        search_result = es.search(index=settings.ELASTICSEARCH_INDEX, size=30, q=f'*"{search_string}"*')
+    else:
+        search_result = es.search(index=settings.ELASTICSEARCH_INDEX, size=30, sort='meta.added_at:desc')
+
+    result_list = [hit['_source'] for hit in search_result['hits']['hits']]
+
+    resp.html = api.template('index.html', result_list=result_list)
 
 
 @api.route("/ws/search", websocket=True)
@@ -26,7 +37,7 @@ async def ws_search(ws):
         # TODO: exclude unwanted fields
         search_result = es.search(index=settings.ELASTICSEARCH_INDEX, size=10, q=f'*"{search_string}"*')
 
-        await ws.send_json([hit['_source']['symbol'] for hit in search_result['hits']['hits']])
+        await ws.send_json([hit['_source']['title'] for hit in search_result['hits']['hits']])
 
     # await ws.close()
 
