@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 responder = "*"
 elasticsearch-dsl = ">=6.0.0,<7.0.0"
+ebooklib = "*"
 
 [requires]
 python_version = "3.7"
